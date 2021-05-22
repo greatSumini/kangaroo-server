@@ -35,6 +35,10 @@ export class Driver extends BaseIdEntity {
   @IsNumber()
   averageSpeed: number;
 
+  @ApiProperty()
+  @IsNumber()
+  rating: number;
+
   @ApiProperty({
     type: [DriverMbti],
   })
@@ -96,6 +100,7 @@ export class Driver extends BaseIdEntity {
     this.name = attributes.name;
     this.age = attributes.age;
     this.avatarUrl = attributes.avatarUrl;
+    this.rating = attributes.rating;
     this.mbtis = attributes.mbtis;
     this.reviews = attributes.reviews;
     this.averageSpeed = attributes.averageSpeed;
@@ -142,6 +147,8 @@ export class Driver extends BaseIdEntity {
       name: faker.name.findName(),
       /** 30 ~ 50 */
       age: Math.floor(Math.random() * 20) + 30,
+      /** 30 ~ 50 */
+      rating: getRandomIntBetween(7, 10) / 2,
       mbtis,
       reviews,
       avatarUrl: faker.image.imageUrl(),
