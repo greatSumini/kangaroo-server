@@ -1,6 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateKidDto } from './dto/create-kid.dto';
+import { getRandomEle } from '@src/common/helpers/array';
 
+import { getRandomNumBetween } from '@src/common/helpers/number';
+import { Journey } from '@src/journeys/entities/journey.entity';
+
+import { CreateKidDto } from './dto/create-kid.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateKidDto } from './dto/update-kid.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -13,7 +17,21 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   create(createUserDto: CreateUserDto): User {
-    return this.usersRepository.create(new User(createUserDto));
+    const kids = [...Array(getRandomNumBetween(1, 2))].map(() => Kid.mock());
+
+    const user = this.usersRepository.create(
+      new User({
+        ...createUserDto,
+        kids,
+      })
+    );
+
+    const journeys = [...Array(getRandomNumBetween(2, 5))].map(() =>
+      Journey.mock(user.id, getRandomEle(kids.map((kid) => kid.id)))
+    );
+
+    user.journeys = journeys;
+    return user;
   }
 
   findAll(): User[] {

@@ -1,7 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsEnum, IsOptional, IsUUID } from 'class-validator';
+import * as faker from 'faker';
 
 import { BaseIdEntity } from '@src/common/base.entity';
+import { getRandomEle } from '@src/common/helpers/array';
+import { routeEdgeMocks } from '@src/routes/mocks/route.mock';
+import { driverMocks } from '@src/drivers/mocks/driver.mock';
 import { RouteEdge } from '@src/routes/entities/route-edge.entity';
 import { Driver } from '@src/drivers/entities/driver.entity';
 
@@ -74,5 +78,23 @@ export class Journey extends BaseIdEntity {
     this.driverId = attributes.driverId;
 
     this.driver = attributes.driver;
+  }
+
+  static mock(userId: string, kidId: string): Journey {
+    const departAt = faker.date.between('2021-05-01', '2021-05-22');
+    const arriveAt = new Date(departAt.getTime() + 15 * 60 * 1000);
+    const driver = getRandomEle(driverMocks);
+
+    return new Journey({
+      status: JourneyStatus.Completed,
+      departAt,
+      arriveAt,
+      departRouteEdge: getRandomEle(routeEdgeMocks),
+      arriveRouteEdge: getRandomEle(routeEdgeMocks),
+      userId,
+      kidId,
+      driverId: driver.id,
+      driver,
+    });
   }
 }
