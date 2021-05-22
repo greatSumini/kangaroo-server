@@ -21,8 +21,6 @@ export class User extends BaseIdEntity {
 
   @ApiProperty({
     type: [Journey],
-    required: false,
-    default: [],
   })
   @IsOptional()
   journeys?: Journey[];
