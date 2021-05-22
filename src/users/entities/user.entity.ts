@@ -1,22 +1,28 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { IsNumber, IsString, IsUrl, IsUUID, Min } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 
 export class User {
+  @ApiProperty()
   @IsUUID()
   @Exclude()
   id: string;
 
+  @ApiProperty()
   @IsString()
   nickname: string;
 
+  @ApiProperty()
   @IsNumber()
   @Min(1)
   kidAge: string;
 
+  @ApiProperty()
   @IsUrl()
   kidAvatarUrl: string;
 
+  @ApiProperty()
   @IsString()
   kidName: string;
 
