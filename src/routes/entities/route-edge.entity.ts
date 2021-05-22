@@ -5,6 +5,10 @@ import { IsNumber } from 'class-validator';
 export class RouteEdge extends BaseIdEntity {
   @ApiProperty()
   @IsNumber()
+  name: string;
+
+  @ApiProperty()
+  @IsNumber()
   lat: number;
 
   @ApiProperty()
@@ -22,6 +26,7 @@ export class RouteEdge extends BaseIdEntity {
       return;
     }
 
+    this.name = attributes.name;
     this.lat = attributes.lat;
     this.lng = attributes.lng;
 
