@@ -25,7 +25,7 @@ export class UsersService {
       })
     );
 
-    const journeys = [...Array(getRandomIntBetween(2, 5))]
+    const journeys = [...Array(getRandomIntBetween(7, 10))]
       .map(() => {
         const kidsCount = getRandomIntBetween(1, kids.length);
         const kidIds = kids
