@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { getRandomIntBetween } from '@src/common/helpers/number';
-import { Journey } from '@src/journeys/entities/journey.entity';
+import { JourneysService } from '@src/journeys/journeys.service';
 
 import { CreateKidDto } from './dto/create-kid.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -13,7 +13,10 @@ import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly journeysService: JourneysService
+  ) {}
 
   create(createUserDto: CreateUserDto): User {
     const kids = [...Array(getRandomIntBetween(1, 2))].map(() => Kid.mock());
@@ -25,22 +28,17 @@ export class UsersService {
       })
     );
 
-    const journeys = [...Array(getRandomIntBetween(7, 10))]
-      .map(() => {
-        const kidsCount = getRandomIntBetween(1, kids.length);
-        const kidIds = kids
-          .sort(() => Math.random() - 0.5)
-          .map((kid) => kid.id)
-          .filter((_, index) => index < kidsCount);
+    [...Array(getRandomIntBetween(7, 10))].forEach(() => {
+      const kidsCount = getRandomIntBetween(1, kids.length);
+      const kidIds = kids
+        .sort(() => Math.random() - 0.5)
+        .map((kid) => kid.id)
+        .filter((_, index) => index < kidsCount);
 
-        return Journey.mock(user.id, kidIds);
-      })
-      .sort(
-        (a, b) =>
-          new Date(b.arriveAt).getTime() - new Date(a.arriveAt).getTime()
-      );
+      this.journeysService.create({ userId: user.id, kidIds });
+    });
 
-    return this.usersRepository.update(user.id, { journeys });
+    return user;
   }
 
   findAll(): User[] {
