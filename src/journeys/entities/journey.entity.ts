@@ -2,9 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsEnum, IsOptional, IsUUID } from 'class-validator';
 
 import { BaseIdEntity } from '@src/common/base.entity';
+import { RouteEdge } from '@src/routes/entities/route-edge.entity';
+import { Driver } from '@src/drivers/entities/driver.entity';
 
 import { JourneyStatus } from '../interfaces/journey.interface';
-import { RouteEdge } from '@src/routes/entities/route-edge.entity';
 
 export class Journey extends BaseIdEntity {
   @ApiProperty({
@@ -28,6 +29,12 @@ export class Journey extends BaseIdEntity {
   @ApiProperty()
   @IsUUID()
   driverId: string;
+
+  @ApiProperty({
+    type: String,
+    description: 'Driver 타입이 그대로 옵니다.',
+  })
+  driver: Driver;
 
   @ApiProperty({
     required: false,
@@ -62,5 +69,7 @@ export class Journey extends BaseIdEntity {
 
     this.userId = attributes.userId;
     this.driverId = attributes.driverId;
+
+    this.driver = attributes.driver;
   }
 }

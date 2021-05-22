@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { RoutesService } from '@src/routes/routes.service';
+import { getRandomEle } from '@src/common/helpers/array';
+import { driverMocks } from '@src/drivers/mocks/driver.mock';
+import { routeEdgeMocks } from '@src/routes/mocks/route.mock';
 
 import { CreateJourneyDto } from './dto/create-journey.dto';
 import { UpdateJourneyDto } from './dto/update-journey.dto';
@@ -8,18 +10,21 @@ import { JourneysRepository } from './journeys.repository';
 
 @Injectable()
 export class JourneysService {
-  constructor(
-    private readonly journeysRepository: JourneysRepository,
-    private readonly routesService: RoutesService
-  ) {}
+  constructor(private readonly journeysRepository: JourneysRepository) {}
 
   create(createJourneyDto: CreateJourneyDto): Journey {
-    const { departRouteEdgeId, arriveRouteEdgeId } = createJourneyDto;
-    const departRouteEdge = this.routesService.findOneEdge(departRouteEdgeId);
-    const arriveRouteEdge = this.routesService.findOneEdge(arriveRouteEdgeId);
+    const driver = getRandomEle(driverMocks);
+    const departRouteEdge = getRandomEle(routeEdgeMocks);
+    const arriveRouteEdge = getRandomEle(departRouteEdge.availables);
 
     return this.journeysRepository.create(
-      new Journey({ ...createJourneyDto, departRouteEdge, arriveRouteEdge })
+      new Journey({
+        ...createJourneyDto,
+        driver,
+        driverId: driver.id,
+        departRouteEdge,
+        arriveRouteEdge,
+      })
     );
   }
 
@@ -32,17 +37,6 @@ export class JourneysService {
   }
 
   update(id: string, updateJourneyDto: UpdateJourneyDto) {
-    const { departRouteEdgeId, arriveRouteEdgeId } = updateJourneyDto;
-
-    if (departRouteEdgeId) {
-      updateJourneyDto['departRouteEdge'] =
-        this.routesService.findOneEdge(departRouteEdgeId);
-    }
-    if (arriveRouteEdgeId) {
-      updateJourneyDto['arriveRouteEdge'] =
-        this.routesService.findOneEdge(arriveRouteEdgeId);
-    }
-
     return this.journeysRepository.update(id, updateJourneyDto);
   }
 
