@@ -125,7 +125,7 @@ export class Driver extends BaseIdEntity {
   };
 
   move = () => {
-    const velocity = Math.random() * 2;
+    const velocity = Math.random() * 0.3;
     const { lat, lng } = this.destRouteEdge;
 
     const diffLat = Math.sign(lat - this.lat) * 0.0001 * velocity;
