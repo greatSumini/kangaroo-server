@@ -2,6 +2,7 @@
     "conventionalCommits.scopes": [
         "npm",
         "api",
-        "swagger"
+        "swagger",
+        "common"
     ]
 }
