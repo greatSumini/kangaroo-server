@@ -11,7 +11,7 @@ export class Journey extends BaseIdEntity {
   @ApiProperty({
     enumName: 'JourneyStatus',
     enum: Object.values(JourneyStatus),
-    default: JourneyStatus.Pending,
+    default: JourneyStatus.Driving,
     required: false,
   })
   @IsEnum(JourneyStatus)
@@ -63,7 +63,7 @@ export class Journey extends BaseIdEntity {
     if (!attributes) {
       return;
     }
-    this.status = attributes.status || JourneyStatus.Pending;
+    this.status = attributes.status || JourneyStatus.Driving;
     this.departAt = attributes.departAt || new Date();
     this.arriveAt = attributes.arriveAt;
 
