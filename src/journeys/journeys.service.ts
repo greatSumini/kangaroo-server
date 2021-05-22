@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { getRandomEle } from '@src/common/helpers/array';
-import { driverMocks } from '@src/drivers/mocks/driver.mock';
+import { DriversService } from '@src/drivers/drivers.service';
 import { routeEdgeMocks } from '@src/routes/mocks/route.mock';
 
 import { CreateJourneyDto } from './dto/create-journey.dto';
@@ -11,18 +11,34 @@ import { JourneysRepository } from './journeys.repository';
 
 @Injectable()
 export class JourneysService {
-  constructor(private readonly journeysRepository: JourneysRepository) {}
+  constructor(
+    private readonly journeysRepository: JourneysRepository,
+    private readonly driversService: DriversService
+  ) {}
 
   create(createJourneyDto: CreateJourneyDto): Journey {
-    const driver = getRandomEle(driverMocks);
     const departRouteEdge = getRandomEle(routeEdgeMocks);
     const arriveRouteEdge = getRandomEle(departRouteEdge.availables);
+
+    const freeDrivers = this.driversService
+      .findAll()
+      .filter(
+        ({ journeys }) =>
+          !journeys?.some((journey) => journey.status === JourneyStatus.Driving)
+      )
+      .sort(() => Math.random() - 0.5);
+
+    if (freeDrivers.length === 0) {
+      throw new NotFoundException(
+        '모든 기사님이 운행중입니다. 잠시 후 다시 시도해주세요'
+      );
+    }
 
     return this.journeysRepository.create(
       new Journey({
         ...createJourneyDto,
-        driver,
-        driverId: driver.id,
+        driver: freeDrivers[0],
+        driverId: freeDrivers[0].id,
         departRouteEdge,
         arriveRouteEdge,
       })
