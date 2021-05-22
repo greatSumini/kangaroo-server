@@ -22,8 +22,8 @@ export const driverMocks: Driver[] = [...Array(50)].map(
       averageSpeed: Math.random() * 2 + 40,
       car: new Car({
         type: getRandomEle(carTypeMocks),
-        /** 2010 ~ 2020 */
-        year: Math.floor(Math.random() * 10) + 2010,
+        /** 2018 ~ 2021 */
+        year: Math.floor(Math.random() * 3) + 2018,
       }),
     })
 );
