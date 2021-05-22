@@ -1,15 +1,24 @@
 import { Injectable } from '@nestjs/common';
+
 import { DriversRepository } from './drivers.repository';
 import { CreateDriverDto } from './dto/create-driver.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
+import { Car } from './entities/car.entity';
 import { Driver } from './entities/driver.entity';
+import { FmsReport } from './entities/fms-report.entity';
 
 @Injectable()
 export class DriversService {
   constructor(private readonly driversRepository: DriversRepository) {}
 
   create(createDriverDto: CreateDriverDto): Driver {
-    return this.driversRepository.create(new Driver(createDriverDto));
+    return this.driversRepository.create(
+      new Driver({
+        ...createDriverDto,
+        car: Car.mock(),
+        fmsReport: FmsReport.mock(),
+      })
+    );
   }
 
   findAll(): Driver[] {

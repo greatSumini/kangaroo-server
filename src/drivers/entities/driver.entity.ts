@@ -4,6 +4,7 @@ import { IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
 import { BaseIdEntity } from '@src/common/base.entity';
 import { Journey } from '@src/journeys/entities/journey.entity';
 import { Car } from './car.entity';
+import { FmsReport } from './fms-report.entity';
 
 export class Driver extends BaseIdEntity {
   @ApiProperty()
@@ -19,14 +20,6 @@ export class Driver extends BaseIdEntity {
   avatarUrl: string;
 
   @ApiProperty()
-  @IsNumber()
-  speed: number;
-
-  @ApiProperty()
-  @IsNumber()
-  averageSpeed: number;
-
-  @ApiProperty()
   @IsString()
   @IsOptional()
   mbti?: string;
@@ -35,6 +28,11 @@ export class Driver extends BaseIdEntity {
     type: Car,
   })
   car: Car;
+
+  @ApiProperty({
+    type: FmsReport,
+  })
+  fmsReport: FmsReport;
 
   @ApiProperty({
     type: [Journey],
@@ -53,11 +51,10 @@ export class Driver extends BaseIdEntity {
     this.name = attributes.name;
     this.age = attributes.age;
     this.avatarUrl = attributes.avatarUrl;
-    this.speed = attributes.speed;
-    this.averageSpeed = attributes.averageSpeed;
     this.mbti = attributes.mbti;
 
     this.car = attributes.car;
+    this.fmsReport = attributes.fmsReport;
     this.journeys = attributes.journeys || [];
   }
 }
