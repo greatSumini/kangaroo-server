@@ -24,6 +24,10 @@ export class Driver extends BaseIdEntity {
   name: string;
 
   @ApiProperty()
+  @IsString()
+  description: string;
+
+  @ApiProperty()
   @IsNumber()
   age: number;
 
@@ -99,6 +103,8 @@ export class Driver extends BaseIdEntity {
 
     this.name = attributes.name;
     this.age = attributes.age;
+    this.description = attributes.description;
+
     this.avatarUrl = attributes.avatarUrl;
     this.rating = attributes.rating;
     this.mbtis = attributes.mbtis;
@@ -147,6 +153,7 @@ export class Driver extends BaseIdEntity {
       name: faker.name.findName(),
       /** 30 ~ 50 */
       age: Math.floor(Math.random() * 20) + 30,
+      description: faker.lorem.paragraphs(getRandomIntBetween(2, 3)),
       /** 30 ~ 50 */
       rating: getRandomIntBetween(7, 10) / 2,
       mbtis,
