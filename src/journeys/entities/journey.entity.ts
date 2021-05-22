@@ -27,7 +27,7 @@ export class Journey extends BaseIdEntity {
   userId: string;
 
   @ApiProperty()
-  @IsUUID(null, {
+  @IsUUID(4, {
     each: true,
   })
   kidIds: string[];
