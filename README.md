@@ -1,13 +1,3 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">Team Swish server-side applications. (for JunctionX Seoul 2021)</p>
-    <p align="center">
-
 ## Installation
 
 ```bash
@@ -38,6 +28,13 @@ $ npm run jest:e2e
 
 # test coverage
 $ npm run jest:cov
+```
+
+## Deploy
+
+```bash
+# run run.sh
+$ ./run.sh
 ```
 
 ## License
