@@ -28,6 +28,10 @@ export class JourneysController {
     type: Journey,
     description: 'The record has been successfully created.',
   })
+  @ApiNotFoundResponse({
+    description:
+      '대기 중인 운전 기사님들이 없을 때입니다. 잠시 후 다시 시도해주세요!',
+  })
   @Post()
   create(@Body() createJourneyDto: CreateJourneyDto) {
     return this.journeysService.create(createJourneyDto);
