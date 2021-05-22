@@ -12,6 +12,8 @@ export class User extends BaseIdEntity {
 
   @ApiProperty({
     type: [Kid],
+    required: false,
+    default: [],
   })
   @Optional()
   kids: Kid[];
