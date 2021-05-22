@@ -16,7 +16,7 @@ export class JourneysService {
     private readonly driversService: DriversService
   ) {}
 
-  create(createJourneyDto: CreateJourneyDto): Journey {
+  create(createJourneyDto: CreateJourneyDto & Partial<Journey>): Journey {
     const departRouteEdge = getRandomEle(routeEdgeMocks);
     const arriveRouteEdge = getRandomEle(departRouteEdge.availables);
 

@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import * as faker from 'faker';
 
 import { getRandomIntBetween } from '@src/common/helpers/number';
+import { JourneyStatus } from '@src/journeys/interfaces/journey.interface';
 import { JourneysService } from '@src/journeys/journeys.service';
 
 import { CreateKidDto } from './dto/create-kid.dto';
@@ -35,7 +37,12 @@ export class UsersService {
         .map((kid) => kid.id)
         .filter((_, index) => index < kidsCount);
 
-      this.journeysService.create({ userId: user.id, kidIds });
+      this.journeysService.create({
+        userId: user.id,
+        kidIds,
+        status: JourneyStatus.Completed,
+        arriveAt: faker.date.between('2021-03-01', '2021-05-21'),
+      });
     });
 
     return user;
