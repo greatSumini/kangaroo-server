@@ -20,6 +20,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { CreateKidDto } from './dto/create-kid.dto';
 import { UpdateKidDto } from './dto/update-kid.dto';
+import { Kid } from './entities/kid.entity';
 
 @ApiTags('Users')
 @Controller('users')
@@ -66,28 +67,35 @@ export class UsersController {
     return this.usersService.remove(id);
   }
 
-  @ApiOkResponse({ type: User })
+  @ApiOkResponse({ type: [Kid] })
+  @ApiNotFoundResponse()
+  @Get(':id/kids')
+  getKids(@Param('id') id: string): Kid[] {
+    return this.usersService.findOne(id).kids;
+  }
+
+  @ApiOkResponse({ type: [Kid] })
   @ApiNotFoundResponse()
   @Post(':id/kids')
-  addKid(@Param('id') id: string, @Body() createKidDto: CreateKidDto): User {
+  addKid(@Param('id') id: string, @Body() createKidDto: CreateKidDto): Kid[] {
     return this.usersService.addKid(id, createKidDto);
   }
 
-  @ApiOkResponse({ type: User })
+  @ApiOkResponse({ type: Kid })
   @ApiNotFoundResponse()
   @Patch(':id/kids/:kidId')
   updateKid(
     @Param('id') id: string,
     @Param('kidId') kidId: string,
     @Body() updatekidDto: UpdateKidDto
-  ): User {
+  ): Kid {
     return this.usersService.updateKid(id, kidId, updatekidDto);
   }
 
-  @ApiOkResponse()
+  @ApiOkResponse({ type: [Kid] })
   @ApiNotFoundResponse()
   @Delete(':id/kids/:kidId')
-  removeKid(@Param('id') id: string, @Param('kidId') kidId: string) {
+  removeKid(@Param('id') id: string, @Param('kidId') kidId: string): Kid[] {
     return this.usersService.removeKid(id, kidId);
   }
 }
