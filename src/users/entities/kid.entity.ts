@@ -3,7 +3,7 @@ import { IsNumber, IsString, IsUrl, Min } from 'class-validator';
 import * as faker from 'faker';
 
 import { BaseIdEntity } from '@src/common/base.entity';
-import { getRandomNumBetween } from '@src/common/helpers/number';
+import { getRandomIntBetween } from '@src/common/helpers/number';
 import { getRandomEle } from '@src/common/helpers/array';
 import { kidAvatarMocks } from '@src/common/mocks/avatar.mock';
 
@@ -33,7 +33,7 @@ export class Kid extends BaseIdEntity {
 
   static mock(): Kid {
     return new Kid({
-      age: getRandomNumBetween(7, 10),
+      age: getRandomIntBetween(7, 10),
       name: faker.name.findName(),
       avatarUrl: getRandomEle(kidAvatarMocks),
     });
