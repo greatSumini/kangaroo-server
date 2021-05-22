@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 
 import { DriversRepository } from './drivers.repository';
 import { CreateDriverDto } from './dto/create-driver.dto';
@@ -35,5 +36,15 @@ export class DriversService {
 
   remove(id: string) {
     return this.driversRepository.remove(id);
+  }
+
+  /** 모든 Driver는 0.1초에 1번씩 움직인다. */
+  @Cron('* * * * * *')
+  async moveAll() {
+    let i = 9;
+    while (i--) {
+      this.driversRepository.find().forEach((driver) => driver.move());
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
   }
 }
