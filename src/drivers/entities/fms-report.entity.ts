@@ -12,10 +12,6 @@ export class FmsReport {
   @IsNumber()
   speed: number;
 
-  @ApiProperty()
-  @IsNumber()
-  averageSpeed: number;
-
   @ApiProperty({ description: '브레이크 페달 위치 [0~1]' })
   @IsNumber()
   brakePedalPos: number;
@@ -46,7 +42,6 @@ export class FmsReport {
     }
 
     this.speed = attributes.speed;
-    this.averageSpeed = attributes.averageSpeed;
     this.brakePedalPos = attributes.brakePedalPos;
     this.brakeStatus = attributes.brakeStatus;
     this.externalLampStatus = attributes.externalLampStatus;
@@ -58,8 +53,6 @@ export class FmsReport {
     return new FmsReport({
       /** 30 ~ 45 */
       speed: Math.floor(Math.random() * 15) + 30,
-      /** 40 ~ 42 */
-      averageSpeed: Math.random() * 2 + 40,
       /** 0 ~ 1 */
       brakePedalPos: Math.random(),
       /** 40 ~ 42 */

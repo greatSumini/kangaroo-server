@@ -25,6 +25,10 @@ export class Driver extends BaseIdEntity {
   avatarUrl: string;
 
   @ApiProperty()
+  @IsNumber()
+  averageSpeed: number;
+
+  @ApiProperty()
   @IsString()
   @IsOptional()
   mbti?: string;
@@ -72,6 +76,7 @@ export class Driver extends BaseIdEntity {
     this.age = attributes.age;
     this.avatarUrl = attributes.avatarUrl;
     this.mbti = attributes.mbti;
+    this.averageSpeed = attributes.averageSpeed;
 
     this.lat = attributes.lat;
     this.lng = attributes.lng;
@@ -89,6 +94,8 @@ export class Driver extends BaseIdEntity {
       /** 30 ~ 50 */
       age: Math.floor(Math.random() * 20) + 30,
       avatarUrl: faker.image.imageUrl(),
+      /** 40 ~ 42 */
+      averageSpeed: Math.random() * 2 + 40,
       lat: nowEdge.lat + (Math.random() - 0.5) * 0.006,
       lng: nowEdge.lng + (Math.random() - 0.5) * 0.006,
       destRouteEdge: getRandomEle(nowEdge.availables),
