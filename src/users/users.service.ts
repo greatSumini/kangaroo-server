@@ -26,9 +26,15 @@ export class UsersService {
       })
     );
 
-    const journeys = [...Array(getRandomIntBetween(2, 5))].map(() =>
-      Journey.mock(user.id, getRandomEle(kids.map((kid) => kid.id)))
-    );
+    const journeys = [...Array(getRandomIntBetween(2, 5))].map(() => {
+      const kidsCount = getRandomIntBetween(1, kids.length);
+      const kidIds = kids
+        .sort(() => Math.random() - 0.5)
+        .map((kid) => kid.id)
+        .filter((_, index) => index < kidsCount);
+
+      return Journey.mock(user.id, kidIds);
+    });
 
     user.journeys = journeys;
     return user;

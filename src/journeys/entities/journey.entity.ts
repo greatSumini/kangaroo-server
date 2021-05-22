@@ -27,8 +27,10 @@ export class Journey extends BaseIdEntity {
   userId: string;
 
   @ApiProperty()
-  @IsUUID()
-  kidId: string;
+  @IsUUID(null, {
+    each: true,
+  })
+  kidIds: string[];
 
   @ApiProperty()
   @IsUUID()
@@ -80,7 +82,7 @@ export class Journey extends BaseIdEntity {
     this.driver = attributes.driver;
   }
 
-  static mock(userId: string, kidId: string): Journey {
+  static mock(userId: string, kidIds: string[]): Journey {
     const departAt = faker.date.between('2021-05-01', '2021-05-22');
     const arriveAt = new Date(departAt.getTime() + 15 * 60 * 1000);
     const driver = getRandomEle(driverMocks);
@@ -92,7 +94,7 @@ export class Journey extends BaseIdEntity {
       departRouteEdge: getRandomEle(routeEdgeMocks),
       arriveRouteEdge: getRandomEle(routeEdgeMocks),
       userId,
-      kidId,
+      kidIds: kidIds,
       driverId: driver.id,
       driver,
     });
