@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { getRandomEle } from '@src/common/helpers/array';
 
 import { getRandomIntBetween } from '@src/common/helpers/number';
 import { Journey } from '@src/journeys/entities/journey.entity';
