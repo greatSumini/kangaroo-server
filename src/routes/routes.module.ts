@@ -7,5 +7,6 @@ import { RouteEdgesRepository } from './routes.repository';
 @Module({
   controllers: [RoutesController],
   providers: [RoutesService, RouteEdgesRepository],
+  exports: [RoutesService],
 })
 export class RoutesModule {}

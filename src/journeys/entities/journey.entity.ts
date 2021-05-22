@@ -4,6 +4,7 @@ import { IsDate, IsEnum, IsOptional, IsUUID } from 'class-validator';
 import { BaseIdEntity } from '@src/common/base.entity';
 
 import { JourneyStatus } from '../interfaces/journey.interface';
+import { RouteEdge } from '@src/routes/entities/route-edge.entity';
 
 export class Journey extends BaseIdEntity {
   @ApiProperty({
@@ -16,22 +17,6 @@ export class Journey extends BaseIdEntity {
   @IsOptional()
   status: JourneyStatus;
 
-  @ApiProperty({
-    required: false,
-    default: new Date(),
-  })
-  @IsDate()
-  @IsOptional()
-  departTime?: Date;
-
-  @ApiProperty()
-  @IsDate()
-  arriveTime: Date;
-
-  @ApiProperty()
-  @IsUUID()
-  routeId: string;
-
   @ApiProperty()
   @IsUUID()
   userId: string;
@@ -40,16 +25,37 @@ export class Journey extends BaseIdEntity {
   @IsUUID()
   driverId: string;
 
+  @ApiProperty({
+    required: false,
+    default: new Date(),
+  })
+  @IsDate()
+  @IsOptional()
+  departAt?: Date;
+
+  @ApiProperty()
+  @IsDate()
+  arriveAt: Date;
+
+  @ApiProperty({
+    type: RouteEdge,
+  })
+  departRouteEdge: RouteEdge;
+
+  @ApiProperty({
+    type: RouteEdge,
+  })
+  arriveRouteEdge: RouteEdge;
+
   constructor(attributes?: Partial<Journey>) {
     super(attributes);
     if (!attributes) {
       return;
     }
     this.status = attributes.status || JourneyStatus.Pending;
-    this.departTime = attributes.departTime || new Date();
-    this.arriveTime = attributes.arriveTime;
+    this.departAt = attributes.departAt || new Date();
+    this.arriveAt = attributes.arriveAt;
 
-    this.routeId = attributes.routeId;
     this.userId = attributes.userId;
     this.driverId = attributes.driverId;
   }

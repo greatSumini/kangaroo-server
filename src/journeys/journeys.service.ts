@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { RoutesService } from '@src/routes/routes.service';
 
 import { CreateJourneyDto } from './dto/create-journey.dto';
 import { UpdateJourneyDto } from './dto/update-journey.dto';
@@ -7,10 +8,19 @@ import { JourneysRepository } from './journeys.repository';
 
 @Injectable()
 export class JourneysService {
-  constructor(private readonly journeysRepository: JourneysRepository) {}
+  constructor(
+    private readonly journeysRepository: JourneysRepository,
+    private readonly routesService: RoutesService
+  ) {}
 
   create(createJourneyDto: CreateJourneyDto): Journey {
-    return this.journeysRepository.create(new Journey(createJourneyDto));
+    const { departRouteEdgeId, arriveRouteEdgeId } = createJourneyDto;
+    const departRouteEdge = this.routesService.findOneEdge(departRouteEdgeId);
+    const arriveRouteEdge = this.routesService.findOneEdge(arriveRouteEdgeId);
+
+    return this.journeysRepository.create(
+      new Journey({ ...createJourneyDto, departRouteEdge, arriveRouteEdge })
+    );
   }
 
   findAll(): Journey[] {
@@ -22,6 +32,17 @@ export class JourneysService {
   }
 
   update(id: string, updateJourneyDto: UpdateJourneyDto) {
+    const { departRouteEdgeId, arriveRouteEdgeId } = updateJourneyDto;
+
+    if (departRouteEdgeId) {
+      updateJourneyDto['departRouteEdge'] =
+        this.routesService.findOneEdge(departRouteEdgeId);
+    }
+    if (arriveRouteEdgeId) {
+      updateJourneyDto['arriveRouteEdge'] =
+        this.routesService.findOneEdge(arriveRouteEdgeId);
+    }
+
     return this.journeysRepository.update(id, updateJourneyDto);
   }
 
