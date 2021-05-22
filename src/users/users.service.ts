@@ -36,7 +36,7 @@ export class UsersService {
     });
 
     user.journeys = journeys.sort(
-      (a, b) => new Date(a.arriveAt).getTime() - new Date(b.arriveAt).getTime()
+      (a, b) => new Date(b.arriveAt).getTime() - new Date(a.arriveAt).getTime()
     );
     return user;
   }

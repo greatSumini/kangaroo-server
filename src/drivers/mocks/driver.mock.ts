@@ -16,6 +16,17 @@ export const driverMbtiMockData: DriverMbti[] = [
   { type: DriverMbtiType.Gentle, name: 'Gentle Driver' },
 ];
 
+export const driverReviewTextMockData: string[] = [
+  'He’s a super super nice driver.',
+  'Thanks you very much! Hope to see you again!',
+  'I do love his vibe.',
+  'What a wonderful drive!',
+  'Kind, Gentle, and often humorous',
+  'He is superb driver',
+  'Thank you for nice driving :)',
+  'Love your kindness!',
+];
+
 export const driverMocks: Driver[] = [...Array(DRIVER_COUNT)].map(
   (_, index) =>
     new Driver({

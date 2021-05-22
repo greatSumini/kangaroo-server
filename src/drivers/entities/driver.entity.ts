@@ -11,8 +11,12 @@ import { Journey } from '@src/journeys/entities/journey.entity';
 import { Car } from './car.entity';
 import { FmsReport } from './fms-report.entity';
 import { getRandomIntBetween } from '@src/common/helpers/number';
-import { driverMbtiMockData } from '../mocks/driver.mock';
+import {
+  driverMbtiMockData,
+  driverReviewTextMockData,
+} from '../mocks/driver.mock';
 import { DriverMbti } from './driver-mbti.entity';
+import { DriverReview } from './driver-review.entity';
 
 export class Driver extends BaseIdEntity {
   @ApiProperty()
@@ -36,6 +40,12 @@ export class Driver extends BaseIdEntity {
   })
   @IsOptional()
   mbtis?: DriverMbti[];
+
+  @ApiProperty({
+    type: [DriverReview],
+  })
+  @IsOptional()
+  reviews?: DriverReview[];
 
   @ApiProperty()
   @IsNumber()
@@ -87,6 +97,7 @@ export class Driver extends BaseIdEntity {
     this.age = attributes.age;
     this.avatarUrl = attributes.avatarUrl;
     this.mbtis = attributes.mbtis;
+    this.reviews = attributes.reviews;
     this.averageSpeed = attributes.averageSpeed;
 
     this.lat = attributes.lat;
@@ -111,11 +122,28 @@ export class Driver extends BaseIdEntity {
       .sort(() => Math.random() - 0.5)
       .filter((_, index) => index < mbtisCount);
 
+    const reviewsCount = getRandomIntBetween(2, 4);
+    const reviews = driverReviewTextMockData
+      .sort(() => Math.random() - 0.5)
+      .filter((_, index) => index < reviewsCount)
+      .map(
+        (text) =>
+          new DriverReview({
+            text,
+            createdAt: faker.date.between('2021-05-01', '2021-05-22'),
+          })
+      )
+      .sort(
+        (b, a) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+
     return new Driver({
       name: faker.name.findName(),
       /** 30 ~ 50 */
       age: Math.floor(Math.random() * 20) + 30,
       mbtis,
+      reviews,
       avatarUrl: faker.image.imageUrl(),
       /** 40 ~ 42 */
       averageSpeed: Math.random() * 2 + 40,
