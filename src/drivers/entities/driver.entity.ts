@@ -3,6 +3,7 @@ import {
   IsBoolean,
   IsNumber,
   IsOptional,
+  IsPhoneNumber,
   IsString,
   IsUrl,
 } from 'class-validator';
@@ -32,6 +33,10 @@ export class Driver extends BaseIdEntity {
   @ApiProperty()
   @IsString()
   description: string;
+
+  @ApiProperty()
+  @IsPhoneNumber()
+  phoneNumber: string;
 
   @ApiProperty()
   @IsNumber()
@@ -114,6 +119,7 @@ export class Driver extends BaseIdEntity {
     this.name = attributes.name;
     this.age = attributes.age;
     this.description = attributes.description;
+    this.phoneNumber = attributes.phoneNumber;
     this.avatarUrl = attributes.avatarUrl;
 
     this.rating = attributes.rating;
@@ -166,6 +172,7 @@ export class Driver extends BaseIdEntity {
       /** 30 ~ 50 */
       age: Math.floor(Math.random() * 20) + 30,
       description: faker.lorem.paragraphs(getRandomIntBetween(2, 3)),
+      phoneNumber: faker.phone.phoneNumber('010-####-####'),
       /** 30 ~ 50 */
       rating: getRandomIntBetween(7, 10) / 2,
       isBest: getRandomIntBetween(1, 5) >= 2 ? true : false,
