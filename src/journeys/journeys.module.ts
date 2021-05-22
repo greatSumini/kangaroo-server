@@ -7,5 +7,6 @@ import { JourneysRepository } from './journeys.repository';
 @Module({
   controllers: [JourneysController],
   providers: [JourneysService, JourneysRepository],
+  exports: [JourneysRepository],
 })
 export class JourneysModule {}

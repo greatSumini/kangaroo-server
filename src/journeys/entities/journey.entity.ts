@@ -1,6 +1,5 @@
-import { Optional } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsEnum, IsUUID } from 'class-validator';
+import { IsDate, IsEnum, IsOptional, IsUUID } from 'class-validator';
 
 import { BaseIdEntity } from '@src/common/base.entity';
 
@@ -14,7 +13,7 @@ export class Journey extends BaseIdEntity {
     required: false,
   })
   @IsEnum(JourneyStatus)
-  @Optional()
+  @IsOptional()
   status: JourneyStatus;
 
   @ApiProperty({
@@ -22,7 +21,7 @@ export class Journey extends BaseIdEntity {
     default: new Date(),
   })
   @IsDate()
-  @Optional()
+  @IsOptional()
   departTime?: Date;
 
   @ApiProperty()

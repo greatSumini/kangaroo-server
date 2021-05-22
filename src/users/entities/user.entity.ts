@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 import { BaseIdEntity } from '@src/common/base.entity';
+import { Journey } from '@src/journeys/entities/journey.entity';
+
 import { Kid } from './kid.entity';
-import { Optional } from '@nestjs/common';
 
 export class User extends BaseIdEntity {
   @ApiProperty()
@@ -15,8 +16,16 @@ export class User extends BaseIdEntity {
     required: false,
     default: [],
   })
-  @Optional()
+  @IsOptional()
   kids: Kid[];
+
+  @ApiProperty({
+    type: [Journey],
+    required: false,
+    default: [],
+  })
+  @IsOptional()
+  journeys?: Journey[];
 
   constructor(attributes?: Partial<User>) {
     super(attributes);
@@ -24,6 +33,8 @@ export class User extends BaseIdEntity {
       return;
     }
     this.nickname = attributes.nickname;
+
     this.kids = attributes.kids || [];
+    this.journeys = attributes.journeys || [];
   }
 }
