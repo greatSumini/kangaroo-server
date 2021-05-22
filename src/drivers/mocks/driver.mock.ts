@@ -6,7 +6,7 @@ import { Driver } from '../entities/driver.entity';
 
 const avatarUrls = shuffleArray<string>(uncleAvatarMocks);
 
-const DRIVER_COUNT = 20;
+const DRIVER_COUNT = 1;
 
 export const driverMbtiMockData: DriverMbti[] = [
   { type: DriverMbtiType.Safe, name: 'Safety first' },
