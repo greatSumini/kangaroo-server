@@ -35,7 +35,9 @@ export class UsersService {
       return Journey.mock(user.id, kidIds);
     });
 
-    user.journeys = journeys;
+    user.journeys = journeys.sort(
+      (a, b) => new Date(a.arriveAt).getTime() - new Date(b.arriveAt).getTime()
+    );
     return user;
   }
 
