@@ -48,8 +48,5 @@ jobs:
       - name: Lint check
         run: npm run lint
 
-      - name: Type check
-        run: npm run tsc
-
       - name: Unit test
         run: npm run jest
