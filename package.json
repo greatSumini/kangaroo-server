@@ -18,7 +18,8 @@
     "jest:watch": "jest --watch",
     "jest:cov": "jest --coverage",
     "jest:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "jest:e2e": "jest --config ./test/jest-e2e.json"
+    "jest:e2e": "jest --config ./test/jest-e2e.json",
+    "test": "npm run format && npm run lint && npm run jest"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",
