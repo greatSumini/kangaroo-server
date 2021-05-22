@@ -10,6 +10,9 @@ import { Journey } from '@src/journeys/entities/journey.entity';
 
 import { Car } from './car.entity';
 import { FmsReport } from './fms-report.entity';
+import { getRandomIntBetween } from '@src/common/helpers/number';
+import { driverMbtiMockData } from '../mocks/driver.mock';
+import { DriverMbti } from './driver-mbti.entity';
 
 export class Driver extends BaseIdEntity {
   @ApiProperty()
@@ -28,10 +31,11 @@ export class Driver extends BaseIdEntity {
   @IsNumber()
   averageSpeed: number;
 
-  @ApiProperty()
-  @IsString()
+  @ApiProperty({
+    type: [DriverMbti],
+  })
   @IsOptional()
-  mbti?: string;
+  mbtis?: DriverMbti[];
 
   @ApiProperty()
   @IsNumber()
@@ -82,7 +86,7 @@ export class Driver extends BaseIdEntity {
     this.name = attributes.name;
     this.age = attributes.age;
     this.avatarUrl = attributes.avatarUrl;
-    this.mbti = attributes.mbti;
+    this.mbtis = attributes.mbtis;
     this.averageSpeed = attributes.averageSpeed;
 
     this.lat = attributes.lat;
@@ -102,10 +106,16 @@ export class Driver extends BaseIdEntity {
       ({ id }) => id === destRouteEdgeId
     );
 
+    const mbtisCount = getRandomIntBetween(3, 5);
+    const mbtis = driverMbtiMockData
+      .sort(() => Math.random() - 0.5)
+      .filter((_, index) => index < mbtisCount);
+
     return new Driver({
       name: faker.name.findName(),
       /** 30 ~ 50 */
       age: Math.floor(Math.random() * 20) + 30,
+      mbtis,
       avatarUrl: faker.image.imageUrl(),
       /** 40 ~ 42 */
       averageSpeed: Math.random() * 2 + 40,
