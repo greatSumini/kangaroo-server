@@ -13,5 +13,5 @@ export const isObjectMatch = (
     return false;
   }
 
-  return tKeys.every((key) => origin[key] !== undefined);
+  return tKeys.every((key) => origin[key] === target[key]);
 };

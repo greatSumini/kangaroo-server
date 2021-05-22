@@ -10,4 +10,21 @@ export class RouteEdge extends BaseIdEntity {
   @ApiProperty()
   @IsNumber()
   lng: number;
+
+  @ApiProperty({
+    type: [RouteEdge],
+  })
+  availables: RouteEdge[];
+
+  constructor(attributes?: Partial<RouteEdge>) {
+    super(attributes);
+    if (!attributes) {
+      return;
+    }
+
+    this.lat = attributes.lat;
+    this.lng = attributes.lng;
+
+    this.availables = attributes.availables;
+  }
 }
