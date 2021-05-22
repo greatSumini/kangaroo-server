@@ -30,7 +30,7 @@ export class Driver extends BaseIdEntity {
   @ApiProperty({
     type: Car,
   })
-  car: Car[];
+  car: Car;
 
   @ApiProperty({
     type: [Journey],
@@ -45,6 +45,12 @@ export class Driver extends BaseIdEntity {
     if (!attributes) {
       return;
     }
+
+    this.name = attributes.name;
+    this.age = attributes.age;
+    this.avatarUrl = attributes.avatarUrl;
+    this.averageSpeed = attributes.averageSpeed;
+    this.mbti = attributes.mbti;
 
     this.journeys = attributes.journeys || [];
   }
