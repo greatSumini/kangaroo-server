@@ -67,6 +67,9 @@ export class Journey extends BaseIdEntity {
     this.departAt = attributes.departAt || new Date();
     this.arriveAt = attributes.arriveAt;
 
+    this.departRouteEdge = attributes.departRouteEdge;
+    this.arriveRouteEdge = attributes.arriveRouteEdge;
+
     this.userId = attributes.userId;
     this.driverId = attributes.driverId;
 
