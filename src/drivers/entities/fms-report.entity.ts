@@ -63,7 +63,7 @@ export class FmsReport {
       /** 0 ~ 1 */
       brakePedalPos: Math.random(),
       /** 40 ~ 42 */
-      brakeStatus: getRandomEle(breakStatusValues),
+      brakeStatus: getRandomEle([BrakeStatus.Good, BrakeStatus.Great]),
       /** 30 ~ 45 */
       externalLampStatus: faker.datatype.boolean(),
       /** 0 ~ 1 */

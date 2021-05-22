@@ -14,11 +14,15 @@ export class DriversRepository extends BaseRepository<Driver> {
     this.records = driverMocks;
   }
 
+  /** fmsReport는 매번 새로 생성한다.
+   - (fmsReport.brakeStatus,batterySupplyVoltage는 바꾸지 않고 고정한다.) */
   serialize = (record: Driver): Driver => {
+    const { brakeStatus, batterySupplyVoltage } = record.fmsReport;
+
     return {
       ...record,
       journeys: this.journeysRepository.find({ driverId: record.id }),
-      fmsReport: FmsReport.mock(),
+      fmsReport: { ...FmsReport.mock(), brakeStatus, batterySupplyVoltage },
     };
   };
 }
