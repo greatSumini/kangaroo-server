@@ -25,20 +25,22 @@ export class UsersService {
       })
     );
 
-    const journeys = [...Array(getRandomIntBetween(2, 5))].map(() => {
-      const kidsCount = getRandomIntBetween(1, kids.length);
-      const kidIds = kids
-        .sort(() => Math.random() - 0.5)
-        .map((kid) => kid.id)
-        .filter((_, index) => index < kidsCount);
+    const journeys = [...Array(getRandomIntBetween(2, 5))]
+      .map(() => {
+        const kidsCount = getRandomIntBetween(1, kids.length);
+        const kidIds = kids
+          .sort(() => Math.random() - 0.5)
+          .map((kid) => kid.id)
+          .filter((_, index) => index < kidsCount);
 
-      return Journey.mock(user.id, kidIds);
-    });
+        return Journey.mock(user.id, kidIds);
+      })
+      .sort(
+        (a, b) =>
+          new Date(b.arriveAt).getTime() - new Date(a.arriveAt).getTime()
+      );
 
-    user.journeys = journeys.sort(
-      (a, b) => new Date(b.arriveAt).getTime() - new Date(a.arriveAt).getTime()
-    );
-    return user;
+    return this.usersRepository.update(user.id, { journeys });
   }
 
   findAll(): User[] {
