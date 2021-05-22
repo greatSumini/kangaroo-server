@@ -5,7 +5,9 @@ import { Driver } from '../entities/driver.entity';
 
 const avatarUrls = shuffleArray<string>(uncleAvatarMocks);
 
-export const driverMocks: Driver[] = [...Array(50)].map(
+const DRIVER_COUNT = 20;
+
+export const driverMocks: Driver[] = [...Array(DRIVER_COUNT)].map(
   (_, index) =>
     new Driver({
       ...Driver.mock(),
