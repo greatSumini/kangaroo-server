@@ -23,6 +23,10 @@ export class Journey extends BaseIdEntity {
 
   @ApiProperty()
   @IsUUID()
+  kidId: string;
+
+  @ApiProperty()
+  @IsUUID()
   driverId: string;
 
   @ApiProperty({
