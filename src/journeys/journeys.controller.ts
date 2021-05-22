@@ -65,4 +65,13 @@ export class JourneysController {
   remove(@Param('id') id: string) {
     return this.journeysService.remove(id);
   }
+
+  @ApiOkResponse({
+    type: Journey,
+  })
+  @ApiNotFoundResponse()
+  @Patch(':id/complete')
+  complete(@Param('id') id: string) {
+    return this.journeysService.complete(id);
+  }
 }

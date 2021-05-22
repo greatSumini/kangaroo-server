@@ -6,6 +6,7 @@ import { routeEdgeMocks } from '@src/routes/mocks/route.mock';
 import { CreateJourneyDto } from './dto/create-journey.dto';
 import { UpdateJourneyDto } from './dto/update-journey.dto';
 import { Journey } from './entities/journey.entity';
+import { JourneyStatus } from './interfaces/journey.interface';
 import { JourneysRepository } from './journeys.repository';
 
 @Injectable()
@@ -42,5 +43,11 @@ export class JourneysService {
 
   remove(id: string) {
     return this.journeysRepository.remove(id);
+  }
+
+  complete(id: string) {
+    return this.journeysRepository.update(id, {
+      status: JourneyStatus.Completed,
+    });
   }
 }
