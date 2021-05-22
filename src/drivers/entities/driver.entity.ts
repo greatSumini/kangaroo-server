@@ -52,6 +52,7 @@ export class Driver extends BaseIdEntity {
     this.averageSpeed = attributes.averageSpeed;
     this.mbti = attributes.mbti;
 
+    this.car = attributes.car;
     this.journeys = attributes.journeys || [];
   }
 }
