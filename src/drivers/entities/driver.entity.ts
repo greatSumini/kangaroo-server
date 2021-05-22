@@ -20,6 +20,10 @@ export class Driver extends BaseIdEntity {
 
   @ApiProperty()
   @IsNumber()
+  speed: number;
+
+  @ApiProperty()
+  @IsNumber()
   averageSpeed: number;
 
   @ApiProperty()
@@ -49,6 +53,7 @@ export class Driver extends BaseIdEntity {
     this.name = attributes.name;
     this.age = attributes.age;
     this.avatarUrl = attributes.avatarUrl;
+    this.speed = attributes.speed;
     this.averageSpeed = attributes.averageSpeed;
     this.mbti = attributes.mbti;
 

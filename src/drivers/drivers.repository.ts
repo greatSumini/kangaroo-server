@@ -16,6 +16,10 @@ export class DriversRepository extends BaseRepository<Driver> {
   serialize = (record: Driver): Driver => {
     return {
       ...record,
+      /** 30 ~ 45 */
+      speed: Math.floor(Math.random() * 15) + 30,
+      /** 40 ~ 42 */
+      averageSpeed: Math.random() * 2 + 40,
       journeys: this.journeysRepository.find({ driverId: record.id }),
     };
   };
