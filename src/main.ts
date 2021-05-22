@@ -15,8 +15,6 @@ async function bootstrap() {
     .setTitle('Swish Docs')
     .setDescription('The swish API document')
     .setVersion('1.0')
-    .addTag('Users')
-    .addTag('Journeys')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
