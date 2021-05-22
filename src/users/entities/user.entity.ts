@@ -1,44 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
-import { IsNumber, IsString, IsUrl, IsUUID, Min } from 'class-validator';
-import { v4 as uuidv4 } from 'uuid';
+import { IsString } from 'class-validator';
 
-export class User {
-  @ApiProperty()
-  @IsUUID()
-  @Exclude()
-  id: string;
+import { BaseIdEntity } from '@src/common/base.entity';
+import { Kid } from './kid.entity';
+import { Optional } from '@nestjs/common';
 
+export class User extends BaseIdEntity {
   @ApiProperty()
   @IsString()
   nickname: string;
 
-  @ApiProperty()
-  @IsNumber()
-  @Min(1)
-  kidAge: string;
-
-  @ApiProperty()
-  @IsUrl()
-  kidAvatarUrl: string;
-
-  @ApiProperty()
-  @IsString()
-  kidName: string;
+  @ApiProperty({
+    type: [Kid],
+  })
+  @Optional()
+  kids: Kid[];
 
   constructor(attributes?: Partial<User>) {
+    super(attributes);
     if (!attributes) {
       return;
     }
-
-    if (attributes.id) {
-      this.id = attributes.id;
-    } else {
-      this.id = uuidv4();
-    }
     this.nickname = attributes.nickname;
-    this.kidAge = attributes.kidAge;
-    this.kidAvatarUrl = attributes.kidAvatarUrl;
-    this.kidName = attributes.kidName;
+    this.kids = attributes.kids || [];
   }
 }
