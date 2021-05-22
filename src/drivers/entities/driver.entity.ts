@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
+import {
+  IsBoolean,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUrl,
+} from 'class-validator';
 import * as faker from 'faker';
 
 import { getRandomEle } from '@src/common/helpers/array';
@@ -38,6 +44,10 @@ export class Driver extends BaseIdEntity {
   @ApiProperty()
   @IsNumber()
   averageSpeed: number;
+
+  @ApiProperty()
+  @IsBoolean()
+  isBest: boolean;
 
   @ApiProperty()
   @IsNumber()
@@ -104,11 +114,13 @@ export class Driver extends BaseIdEntity {
     this.name = attributes.name;
     this.age = attributes.age;
     this.description = attributes.description;
-
     this.avatarUrl = attributes.avatarUrl;
+
     this.rating = attributes.rating;
+    this.isBest = attributes.isBest;
     this.mbtis = attributes.mbtis;
     this.reviews = attributes.reviews;
+
     this.averageSpeed = attributes.averageSpeed;
 
     this.lat = attributes.lat;
@@ -156,6 +168,7 @@ export class Driver extends BaseIdEntity {
       description: faker.lorem.paragraphs(getRandomIntBetween(2, 3)),
       /** 30 ~ 50 */
       rating: getRandomIntBetween(7, 10) / 2,
+      isBest: getRandomIntBetween(1, 5) >= 2 ? true : false,
       mbtis,
       reviews,
       avatarUrl: faker.image.imageUrl(),
