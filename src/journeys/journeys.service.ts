@@ -37,7 +37,6 @@ export class JourneysService {
     return this.journeysRepository.create(
       new Journey({
         ...createJourneyDto,
-        driver: freeDrivers[0],
         driverId: freeDrivers[0].id,
         departRouteEdge,
         arriveRouteEdge,

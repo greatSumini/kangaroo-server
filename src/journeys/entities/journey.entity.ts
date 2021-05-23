@@ -7,7 +7,6 @@ import { getRandomEle } from '@src/common/helpers/array';
 import { routeEdgeMocks } from '@src/routes/mocks/route.mock';
 import { driverMocks } from '@src/drivers/mocks/driver.mock';
 import { RouteEdge } from '@src/routes/entities/route-edge.entity';
-import { Driver } from '@src/drivers/entities/driver.entity';
 
 import { JourneyStatus } from '../interfaces/journey.interface';
 
@@ -35,12 +34,6 @@ export class Journey extends BaseIdEntity {
   @ApiProperty()
   @IsUUID()
   driverId: string;
-
-  @ApiProperty({
-    type: String,
-    description: 'Driver 타입이 그대로 옵니다.',
-  })
-  driver: Driver;
 
   @ApiProperty({
     required: false,
@@ -78,25 +71,22 @@ export class Journey extends BaseIdEntity {
 
     this.userId = attributes.userId;
     this.driverId = attributes.driverId;
-
-    this.driver = attributes.driver;
   }
 
   static mock(userId: string, kidIds: string[]): Journey {
     const departAt = faker.date.between('2021-05-01', '2021-05-22');
     const arriveAt = new Date(departAt.getTime() + 15 * 60 * 1000);
-    const driver = getRandomEle(driverMocks);
+    const driverId = getRandomEle(driverMocks).id;
 
     return new Journey({
       status: JourneyStatus.Completed,
       departAt,
       arriveAt,
+      userId,
+      kidIds,
+      driverId,
       departRouteEdge: getRandomEle(routeEdgeMocks),
       arriveRouteEdge: getRandomEle(routeEdgeMocks),
-      userId,
-      kidIds: kidIds,
-      driverId: driver.id,
-      driver,
     });
   }
 }
