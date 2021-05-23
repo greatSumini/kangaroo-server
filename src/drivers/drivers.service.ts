@@ -41,10 +41,10 @@ export class DriversService {
   /** 모든 Driver는 0.1초에 1번씩 움직인다. */
   @Cron('* * * * * *')
   async moveAll() {
-    let i = 9;
+    let i = 4;
     while (i--) {
       this.driversRepository.find().forEach((driver) => driver.move());
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
   }
 }
