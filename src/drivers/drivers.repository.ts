@@ -23,7 +23,7 @@ export class DriversRepository extends BaseRepository<Driver> {
 
     return {
       ...record,
-      journeys: [journeys[journeys.length - 1]],
+      journeys: journeys.length > 0 ? [journeys[journeys.length - 1]] : [],
       fmsReport: { ...FmsReport.mock(), brakeStatus, batterySupplyVoltage },
     };
   };
