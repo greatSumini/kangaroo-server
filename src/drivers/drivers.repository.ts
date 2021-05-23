@@ -19,9 +19,11 @@ export class DriversRepository extends BaseRepository<Driver> {
   serialize = (record: Driver): Driver => {
     const { brakeStatus, batterySupplyVoltage } = record.fmsReport;
 
+    const journeys = this.journeysRepository.find({ driverId: record.id });
+
     return {
       ...record,
-      journeys: this.journeysRepository.find({ driverId: record.id }),
+      journeys: [journeys[journeys.length - 1]],
       fmsReport: { ...FmsReport.mock(), brakeStatus, batterySupplyVoltage },
     };
   };
